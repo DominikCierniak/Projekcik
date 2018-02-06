@@ -37,6 +37,12 @@ public class PseudonimController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/pseudonim", method = RequestMethod.PUT)
+    public ResponseEntity<Void> editPseudonim(@RequestBody @NotNull @Valid Pseudonim pseudonim) {
+        pseudonimService.savePseudonim(pseudonim);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = "/ipseudonimow", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Integer ilePseudonimow() {return pseudonimService.ilePseudonimow();}
 }

@@ -42,6 +42,12 @@ public class GatunekController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/gatunek", method = RequestMethod.PUT)
+    public ResponseEntity<Void> editGatunek(@RequestBody @NotNull @Valid Gatunek gatunek) {
+        gatunekService.saveGatunek(gatunek);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
     @RequestMapping(value = "/lgatunki", method = RequestMethod.GET)
     public Integer ileGatunkow() {return gatunekService.ileGatunkow();}
 }

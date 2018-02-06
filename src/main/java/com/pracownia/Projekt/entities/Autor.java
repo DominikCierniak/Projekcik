@@ -1,24 +1,35 @@
 package com.pracownia.Projekt.entities;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 import javax.persistence.*;
 
 
 @Entity
 public class Autor {
     public Autor() {}
-
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @GenericGenerator(
+            name = "wikiSequenceGenerator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @Parameter(name = "sequence_name", value = "WIKI_SEQUENCE"),
+                    @Parameter(name = "initial_value", value = "1"),
+                    @Parameter(name = "increment_size", value = "1")
+            }
+    )
+    @Id @GeneratedValue(generator = "wikiSequenceGenerator")
     @Column private Integer id;
 
     @Column private String imie;
 
     @Column private String nazwisko;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "adres", referencedColumnName = "id")
     private Adress adress;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="pseudonim", referencedColumnName = "id")
     private Pseudonim pseudonim;
 
